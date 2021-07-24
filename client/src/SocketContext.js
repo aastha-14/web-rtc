@@ -22,7 +22,8 @@ const ContextProvider = ({ children }) => {
             .then((currentStream) => {
                 setStream(currentStream);
                 myVideo.current.srcObject = currentStream;
-            });
+            })
+            .catch((error) => { console.log(error); });
 
         socket.on('me', (id) => setMe(id));
 
@@ -71,7 +72,9 @@ const ContextProvider = ({ children }) => {
     return (
         <SocketContext.Provider value={{
             call, callAccepted, myVideo, userVideo, stream, name, setName, callEnded, me, callUser, leaveCall, answerCall
-        }}></SocketContext.Provider>
+        }}>
+            {children}
+        </SocketContext.Provider>
     );
 };
 
